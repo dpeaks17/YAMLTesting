@@ -1,0 +1,29 @@
+# Author: Dant'e Peaks
+# Revised: 12/7/2021
+# L1 test for background setting gradient background
+# https://dev.azure.com/hexagonPPMCOL/PPM/_testPlans/define?planId=2778945&suiteId=2819253
+settings:
+  name: GradientBackground
+  description: "Sets and gets the background color."
+  classname: L1
+  suite: Background
+  file: GradientBackground.yaml
+calls:
+#Load the small utility area model
+- command: GVCLoadModel
+  input:
+    - model:
+      - UtilityTestModel
+      - https://argo.hexagonppm.com/graphicsamples/utility/
+      - parametrics
+      - file
+#Set background color to gradient
+- command: MCDSetBackground
+  input:
+    type: Gradient
+
+# Validate that the background color is gradient
+- command: getvisualsettingsenabled
+  input: 
+    - "GradientBackground"
+  expected: true

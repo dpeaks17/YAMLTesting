@@ -1,0 +1,40 @@
+# Author: Dant'e Peaks
+# Revised: 12/7/2021
+# L1 test for background setting new selection color on an object
+# https://dev.azure.com/hexagonPPMCOL/PPM/_testPlans/define?planId=2778945&suiteId=2819253
+
+settings:
+  name: MaterialManagerApplyMaterialToSingleObject
+  description: "Tests applying materials to a single object by id."
+  classname: L1
+  suite: Materials
+  file: MaterialManagerApplyMaterialToSingleObject.yaml
+calls:
+- command: GVCLoadModel
+  input:
+    - model:
+      - UtilityTestModel
+      - https://argo.hexagonppm.com/graphicsamples/utility/
+      - parametrics
+      - file
+- command: MCDDefineMaterial
+  input:
+    - name: "MaterialName"
+    - rgb:
+        r: 255
+        g: 0
+        b: 0
+        a: 100
+    - transparency: .75
+- command: MCDApplyMaterialToObjects
+  input:
+    - ids: [35]
+    - name: "MaterialName"
+    - model: "UtilityTestModel"
+- command: MCDSelect
+  input:
+  - 35
+  validation:
+    - command: getSelection
+      expected: [35]
+  # TODO: Verify selected object(s) appears with current Selection color

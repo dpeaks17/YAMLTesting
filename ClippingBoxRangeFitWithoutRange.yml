@@ -1,0 +1,25 @@
+# Author: Dant'e Peaks
+# Revised: 12/7/2021
+# L1 test for background setting gradient background
+# https://dev.azure.com/hexagonPPMCOL/PPM/_testPlans/define?planId=2778945&suiteId=2819253
+settings:
+  name: ClippingBoxRangeFitWithoutRange
+  description: "Tests if a clipped object can be fit to."
+  classname: L1
+  suite: Clipping
+  file: ClippingBoxRangeFitWithoutRange.yaml
+calls:
+  - command: GVCLoadModel
+    input:
+      - model:
+          - Refining
+          - https://argo.hexagonppm.com/graphicsamples/refining/
+          - parametrics
+          - file
+  - command: MCDSelect
+  input:
+  - 276 # render id of object to select
+  - false # we aren't selecting multiple objects so we don't need multiselect
+  validation:
+    - command: getSelection
+      expected: [276] # an array is returned, make sure the correct id is selected.
